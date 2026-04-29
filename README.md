@@ -240,4 +240,9 @@ However, one flawed suggestion was attempting to run Python import statements di
 
 Overall, AI acted as a useful assistant, but human judgment was necessary to ensure correctness.
 
+---
+
+## Demo Video
+
+Watch the project walkthrough here:  
 <video controls src="Screen Recording 2026-04-29 at 02.55.51.mov" title="Title"></video>
