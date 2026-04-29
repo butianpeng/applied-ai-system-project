@@ -88,7 +88,6 @@ Human judgment is still needed to ensure diverse and fair results.
 
 The system follows a pipeline from user input to recommendation output:
 
-```text
 User Preferences
         ↓
 Recommender System (recommend_songs)
@@ -121,3 +120,59 @@ Final Output (Top K songs with explanations)
 - Unit tests verify correctness of recommendations  
 - Logging ensures transparency of the process  
 - Guardrails handle edge cases (e.g., empty dataset)  
+
+---
+
+## Sample Interactions
+
+### Example 1: High-Energy Pop User
+
+Input:
+- Genre: pop
+- Mood: happy
+- Energy: 0.9
+
+Output:
+- Sunrise City — Score: 4.77  
+  Because: genre match (+2.0), mood match (+1.0), energy score (+0.87)
+
+---
+
+### Example 2: Chill Lofi User
+
+Input:
+- Genre: lofi
+- Mood: chill
+- Energy: 0.35
+
+Output:
+- Calm Nights — Score: 4.10  
+  Because: genre match (+2.0), mood match (+1.0), energy score (+0.95)
+
+---
+
+## Design Decisions
+
+- Used a rule-based scoring system instead of machine learning for simplicity and interpretability  
+- Weighted genre highest (+2.0) because it is the strongest signal  
+- Added explanation generation to improve transparency of recommendations  
+- Included logging to track how scores are computed  
+
+Trade-offs:
+- Simpler system is easier to debug and understand  
+- But less flexible compared to learning-based recommender systems  
+
+---
+
+## Testing Summary
+
+- Unit tests verify recommendation logic using pytest  
+- System tested on multiple user profiles  
+- All tests pass successfully  
+
+What worked:
+- Ranking system produces reasonable recommendations  
+- Explanation feature improves user understanding  
+
+What didn’t:
+- Small dataset limits diversity and realism of recommendations  
