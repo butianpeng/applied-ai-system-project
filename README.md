@@ -207,3 +207,33 @@ We tested the system with multiple user profiles:
 - All tests passed successfully  
 - The system behaves consistently across different inputs  
 - Reliability is limited by the small dataset size  
+
+---
+
+## Reflection and Ethics
+
+### Limitations and Bias
+
+The system has several limitations. It relies on a small dataset, which can lead to biased recommendations if certain genres are overrepresented. The scoring system also heavily favors genre matching, which may reduce diversity in recommendations.
+
+---
+
+### Potential Misuse and Prevention
+
+The system could be misused by over-relying on popularity scores, which may reinforce mainstream trends and reduce exposure to less popular content. To prevent this, future improvements could include diversity constraints or fairness adjustments in scoring.
+
+---
+
+### What Surprised Me
+
+During testing, I was surprised by how strongly genre weighting influenced results. Even when energy scores were close, genre matches dominated the ranking more than expected.
+
+---
+
+### Collaboration with AI
+
+AI assistance was helpful in structuring the project and debugging issues, especially when resolving import errors and designing the scoring system.
+
+However, one flawed suggestion was attempting to run Python import statements directly in the terminal, which caused confusion. This showed that AI suggestions still need to be carefully interpreted and verified.
+
+Overall, AI acted as a useful assistant, but human judgment was necessary to ensure correctness.
