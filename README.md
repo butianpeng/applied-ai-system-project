@@ -79,3 +79,45 @@ use the same basic idea: compare user preferences to item features,
 score everything, and rank the results. The main risk of bias is
 that if the catalog has more pop songs, pop users always win.
 Human judgment is still needed to ensure diverse and fair results.
+
+---
+
+## System Architecture
+
+### Overview
+
+The system follows a pipeline from user input to recommendation output:
+
+```text
+User Preferences
+        ↓
+Recommender System (recommend_songs)
+        ↓
+Scoring Engine (genre, mood, energy, popularity)
+        ↓
+Explanation Generator (explain_recommendation)
+        ↓
+Final Output (Top K songs with explanations)
+
+### Components
+
+- **Recommender System:** Main function that processes user input and ranks songs  
+- **Scoring Engine:** Computes similarity scores using features  
+- **Explanation Generator:** Provides reasoning for each recommendation  
+- **Logging System:** Tracks scoring and recommendation steps  
+- **Testing System:** Uses pytest to ensure correctness  
+
+### Data Flow
+
+1. User provides preferences (genre, mood, energy)  
+2. Songs are loaded from dataset  
+3. Each song is scored based on similarity  
+4. Top songs are selected  
+5. Explanations are generated  
+6. Results are displayed  
+
+### Reliability and Testing
+
+- Unit tests verify correctness of recommendations  
+- Logging ensures transparency of the process  
+- Guardrails handle edge cases (e.g., empty dataset)  
