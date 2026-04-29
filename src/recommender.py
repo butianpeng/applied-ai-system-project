@@ -1,6 +1,11 @@
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple
 from dataclasses import dataclass
 import csv
+import logging
+
+
+logging.basicConfig(level=logging.INFO)
+
 
 @dataclass
 class Song:
@@ -15,6 +20,7 @@ class Song:
     danceability: float
     acousticness: float
 
+
 @dataclass
 class UserProfile:
     favorite_genre: str
@@ -22,36 +28,50 @@ class UserProfile:
     target_energy: float
     likes_acoustic: bool
 
+
 class Recommender:
     def __init__(self, songs: List[Song]):
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
         scored = []
+
         for song in self.songs:
             score = 0.0
+
             if song.genre == user.favorite_genre:
                 score += 2.0
+
             if song.mood == user.favorite_mood:
                 score += 1.0
+
             score += 1.0 - abs(song.energy - user.target_energy)
+
             scored.append((song, score))
+
         scored.sort(key=lambda x: x[1], reverse=True)
         return [song for song, score in scored[:k]]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
         reasons = []
+
         if song.genre == user.favorite_genre:
-            reasons.append("genre matches")
+            reasons.append("genre matches your preference")
+
         if song.mood == user.favorite_mood:
-            reasons.append("mood matches")
-        reasons.append("energy is close to your target")
-        return "Recommended because: " + ", ".join(reasons)
+            reasons.append("mood matches your preference")
+
+        reasons.append("energy level is close to your target")
+
+        return "Recommended because " + ", ".join(reasons) + "."
+
 
 def load_songs(csv_path: str) -> List[Dict]:
     songs = []
-    with open(csv_path, newline='') as f:
+
+    with open(csv_path, newline="") as f:
         reader = csv.DictReader(f)
+
         for row in reader:
             songs.append({
                 "title": row["title"],
@@ -66,11 +86,38 @@ def load_songs(csv_path: str) -> List[Dict]:
                 "release_decade": row.get("release_decade", ""),
                 "bpm_category": row.get("bpm_category", ""),
             })
+
+    logging.info(f"Loaded {len(songs)} songs from {csv_path}")
     return songs
 
+
+def explain_recommendation(song: Dict, score: float, reasons: str) -> str:
+    title = song.get("title", "Unknown song")
+    artist = song.get("artist", "Unknown artist")
+    genre = song.get("genre", "unknown genre")
+    mood = song.get("mood", "unknown mood")
+    energy = song.get("energy", "unknown energy")
+
+    return (
+        f"{title} by {artist} was recommended with a score of {score}. "
+        f"It matches the user's preferences because it has genre '{genre}', "
+        f"mood '{mood}', and energy level {energy}. "
+        f"Scoring details: {reasons}."
+    )
+
+
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
+    logging.info("Starting recommendation process")
+
+    if not songs:
+        logging.warning("No songs were provided to the recommender.")
+        return []
+
     scored = []
+
     for song in songs:
+        logging.info(f"Scoring song: {song.get('title', 'Unknown song')}")
+
         score = 0.0
         reasons = []
 
@@ -95,7 +142,14 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
             score += 0.5
             reasons.append("detailed mood match (+0.5)")
 
-        scored.append((song, round(score, 2), ", ".join(reasons)))
+        final_score = round(score, 2)
+        reason_text = ", ".join(reasons)
+        explanation = explain_recommendation(song, final_score, reason_text)
+
+        scored.append((song, final_score, explanation))
 
     scored.sort(key=lambda x: x[1], reverse=True)
+
+    logging.info(f"Recommendation process complete. Returning top {k} songs.")
+
     return scored[:k]
