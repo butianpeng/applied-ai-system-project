@@ -176,3 +176,34 @@ What worked:
 
 What didn’t:
 - Small dataset limits diversity and realism of recommendations  
+
+---
+
+## Reliability and Evaluation
+
+The system’s reliability was tested using automated unit tests and manual evaluation.
+
+### Automated Testing
+
+- All unit tests pass successfully using pytest  
+- Tests verify that recommendations are generated correctly  
+- Tests ensure the output format (song, score, explanation) is consistent  
+
+### Logging and Guardrails
+
+- Logging tracks the recommendation process and scoring steps  
+- The system handles edge cases such as empty song lists safely  
+
+### Manual Evaluation
+
+We tested the system with multiple user profiles:
+
+- High-energy users received energetic songs  
+- Chill users received low-energy songs  
+- Genre preference had the strongest influence  
+
+### Summary
+
+- All tests passed successfully  
+- The system behaves consistently across different inputs  
+- Reliability is limited by the small dataset size  
