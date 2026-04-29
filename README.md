@@ -2,6 +2,8 @@
 
 ## Project Summary
 
+This project extends the original "Music Recommender Simulation" from earlier modules by adding explanation generation, logging, and reliability testing.
+
 This recommender uses content-based filtering to suggest songs
 based on a user's genre, mood, and energy preferences. It scores
 each song and returns the top matches.
