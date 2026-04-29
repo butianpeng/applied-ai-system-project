@@ -239,3 +239,5 @@ AI assistance was helpful in structuring the project and debugging issues, espec
 However, one flawed suggestion was attempting to run Python import statements directly in the terminal, which caused confusion. This showed that AI suggestions still need to be carefully interpreted and verified.
 
 Overall, AI acted as a useful assistant, but human judgment was necessary to ensure correctness.
+
+<video controls src="Screen Recording 2026-04-29 at 02.55.51.mov" title="Title"></video>
